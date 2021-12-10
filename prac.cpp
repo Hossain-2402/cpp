@@ -93,18 +93,21 @@ class Stack{
 			arr[++top] = a;
 		}
 		int pop(){
-			if(top<0) return -100;
+			if(top<0) return (MAX + 1);
 			int a = arr[top--];
 			return a;
 		}
 		int peek(){
-			if(top<0) return -100;
+			if(top<0) return (MAX + 1);
 			int a = arr[top];
 			return a;
 		}
 		bool isEmpty(){
 			if(top < 0) return true;
 			return false;
+		}
+		int size(){
+			return (top);
 		}
 };  
 
@@ -127,7 +130,7 @@ int main(){
 	s.push(10);
 	s.push(20);
 	s.push(30);
-	cout << s.pop() << endl;
+	cout << s.pop() << endl << endl << s.size() << endl;
 
 
 }
