@@ -1,6 +1,7 @@
 #include<bits\stdc++.h>
 using namespace std;
 
+#define MAX 100
 
 void linearSearch(vector<int> v,int a){
 	int n = v.size();
@@ -80,6 +81,33 @@ void bubble_sort(vector<int> v){
 	print_List(v);
 }
 
+class Stack{
+	int top;
+	public:
+		int arr[MAX];
+		Stack(){
+			top = -1;
+		}
+		void push(int a){
+			if(top > (MAX-1)) return ;
+			arr[++top] = a;
+		}
+		int pop(){
+			if(top<0) return -100;
+			int a = arr[top--];
+			return a;
+		}
+		int peek(){
+			if(top<0) return -100;
+			int a = arr[top];
+			return a;
+		}
+		bool isEmpty(){
+			if(top < 0) return true;
+			return false;
+		}
+};  
+
 
 int main(){
 	vector<int> v = {1,2,3,4,5,6,7,8,9,10};
@@ -93,5 +121,13 @@ int main(){
 	print_List(numbers);
 	bubble_sort(numbers);
 	selection_sort(numbers);
+
+	class Stack s;
+	cout << endl;
+	s.push(10);
+	s.push(20);
+	s.push(30);
+	cout << s.pop() << endl;
+
 
 }
