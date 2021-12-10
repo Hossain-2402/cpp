@@ -1,69 +1,51 @@
-#include <bits/stdc++.h>
+#include <bits/stdc++.h> 
+using namespace std; 
 
-using namespace std;
+int partition (int arr[], int left, int right) { 
+	int pivot = arr[right]; 
+	int i = (left - 1);
+	for (int j = left; j < right; j++) 
+	{ 
+		if (arr[j] < pivot) 
+		{ 
+			i++;
+			int temp = arr[i];
+ 			arr[i] = arr[j];
+ 			arr[j] = temp;
+		} 
+	} 
+	int temp = arr[i+1];
+	arr[i+1] = arr[right];
+	arr[right] = temp;
+	return (i + 1); 
+} 
 
-#define MAX 1000
+void quickSort(int arr[], int left, int right) 
+{ 
+	if (left < right) 
+	{ 
+		int p = partition(arr, left, right); 
 
-class Stack {
-	int top;
+		quickSort(arr, left, p - 1); 
+		quickSort(arr, p + 1, right); 
+	} 
+} 
 
-public:
-	int a[MAX];
+void printArray(int arr[], int size) 
+{ 
+	int i; 
+	for (i = 0; i < size; i++) 
+		cout << arr[i] << " "; 
+	cout << endl; 
+} 
 
-	Stack() { 
-		top = -1;
-	}
-	bool push(int x){
-		if (top >= (MAX - 1)) {
-			cout << "Stack Overflow";
-			return false;
-		}
-		else {
-			a[++top] = x;
-			cout << x << " pushed into stack\n";
-			return true;
-		}
-	}
-	int pop(){
-		if (top < 0) {
-			cout << "Stack Underflow";
-			return 0;
-		}
-		else {
-			int x = a[top--];
-			return x;
-		}
-	}
-	int peek(){
-		if (top < 0) {
-			cout << "Stack is Empty";
-			return 0;
-		}
-		else {
-			int x = a[top];
-			return x;
-		}
-	}
-	bool isEmpty(){
-		return (top < 0);
-	}
-};
+int main() 
+{ 
+	int arr[] = {5,4,3,2,1}; 
+	int n = 5;
+	quickSort(arr, 0, n - 1); 
+	cout << endl <<"Sorted array: "; 
+	printArray(arr, n); 
+	return 0; 
+} 
 
-
-int main()
-{
-	class Stack s;
-	cout << endl;
-	s.push(10);
-	s.push(20);
-	s.push(30);
-	cout << s.pop() << " Popped from stack\n";
-	cout <<"Elements present in stack : ";
-	while(!s.isEmpty()){
-		cout<<s.peek()<<" ";
-		s.pop();
-	}
-	cout << endl;
-
-	return 0;
-}
