@@ -112,6 +112,43 @@ class Stack{
 };  
 
 
+
+struct Node{
+	int data;
+	Node *next;
+};
+
+void prepend(Node **head,int new_data){
+	Node *new_node = (Node*) malloc(sizeof(Node));
+	new_node->data = new_data;
+	new_node->next = *head;
+	*head = new_node;
+}
+void append(Node **head,int new_data){
+	Node *new_node = (Node*) malloc(sizeof(Node));
+	new_node->data = new_data;
+	new_node->next = NULL;
+
+	if(*head == NULL){
+		*head = new_node;
+	}
+
+	Node *last_element = *head;
+	while(last_element->next != NULL){
+		last_element = last_element->next;
+	}
+	last_element->next = new_node;
+}
+void printLinkedList(Node **node){
+	cout << endl << endl;
+	while(node != NULL){
+		cout << " " << node->data;
+	}
+
+	cout << endl;
+}
+
+
 int main(){
 	vector<int> v = {1,2,3,4,5,6,7,8,9,10};
 
@@ -131,6 +168,16 @@ int main(){
 	s.push(20);
 	s.push(30);
 	cout << s.pop() << endl << endl << s.size() << endl;
+
+	Node *head = NULL;
+
+	prepend(&head,1);
+	append(&head,3);
+	append(&head,4);
+	append(&head,5);
+	append(&head,6);
+
+	printLinkedList(&head);
 
 
 }

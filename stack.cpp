@@ -114,3 +114,17 @@ int main(){
 	sortIt();
 	cout << endl;
 }
+
+
+/*
+
+
+	pointer soters the [address] of another variable
+
+
+	int var = 10;
+	int *addr_var = &var;
+	int *address = &adr_var;
+	int **address = &address
+
+*/
