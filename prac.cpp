@@ -49,7 +49,7 @@ void print_List(vector<int> v){
 }
 
 
-void b_sort(vector<int> v){
+void selection_sort(vector<int> v){
 	int n = v.size();
 	for(int i=0;i<n;i++){
 		int min = i;
@@ -65,21 +65,33 @@ void b_sort(vector<int> v){
 	print_List(v);
 }
 
+
+void bubble_sort(vector<int> v){
+	int n = v.size();
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n-i-1;j++){
+			if(v[j] > v[j+1]){
+				int temp = v[j];
+				v[j] = v[j+1];
+				v[j+1] = temp;
+			}
+		}
+	}
+	print_List(v);
+}
+
+
 int main(){
 	vector<int> v = {1,2,3,4,5,6,7,8,9,10};
 
 
-	vector<int> numbers = {2,1,4,3,5,6,7,0,9};
-
+	vector<int> numbers_1 = {2,1,4,3,5,6,7,0,9};
+	vector<int> numbers = {2,1,0};
 	int n = 2;
-	// cout << endl;
-	// cin >> n;
-	// cout << endl;
 	binearySearch(v,n);
 
 	print_List(numbers);
-	b_sort(numbers);
-
-
+	bubble_sort(numbers);
+	selection_sort(numbers);
 
 }
