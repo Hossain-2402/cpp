@@ -139,10 +139,11 @@ void append(Node **head,int new_data){
 	}
 	last_element->next = new_node;
 }
-void printLinkedList(Node **node){
+void printLinkedList(Node *node){
 	cout << endl << endl;
 	while(node != NULL){
 		cout << " " << node->data;
+		node = node->next;
 	}
 
 	cout << endl;
@@ -172,12 +173,14 @@ int main(){
 	Node *head = NULL;
 
 	prepend(&head,1);
+	append(&head,2);
 	append(&head,3);
 	append(&head,4);
 	append(&head,5);
 	append(&head,6);
+	prepend(&head,0);
 
-	printLinkedList(&head);
+	printLinkedList(head);
 
 
 }
