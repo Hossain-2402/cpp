@@ -149,20 +149,18 @@ void printLinkedList(Node *node){
 	cout << endl;
 }
 
-//   0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
- 
-void reverseLinkedList(Node *head){
-	Node *prev_node = NULL;
-	Node *current_node = head;
-	while(current_node!= NULL){
-		Node *next_node = (current_node->next)->next;
-		Node *new_prev = current_node->next;
-		(current_node->next)->next = current_node;
-		current_node->next = prev_node;
-		prev_node = new_prev;
-		// current_node = ((next_node != NULL) ? next_node : current_node );
-		current_node = next_node;
-	} 
+// NULL -> 0 -> 1 -> 2 -> 3
+
+void reverseLinkedList(Node **head){
+	Node *prev = NULL;
+	Node *current_node = *head;	
+	while(current_node != NULL){
+		Node *next = current_node->next;
+		current_node->next = prev;
+		prev = current_node;
+		current_node = next; 
+	}
+	(*head) = prev;
 }
 
 int main(){
@@ -190,14 +188,12 @@ int main(){
 	prepend(&head,1);
 	append(&head,2);
 	append(&head,3);
-	append(&head,4);
-	append(&head,5);
-	append(&head,6);
 	prepend(&head,0);
 
 	printLinkedList(head);
 
-	reverseLinkedList(head);
+	reverseLinkedList(&head);
+	printLinkedList(head);
 
 
 }
