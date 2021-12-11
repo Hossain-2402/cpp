@@ -149,6 +149,21 @@ void printLinkedList(Node *node){
 	cout << endl;
 }
 
+//   0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
+ 
+void reverseLinkedList(Node *head){
+	Node *prev_node = NULL;
+	Node *current_node = head;
+	while(current_node!= NULL){
+		Node *next_node = (current_node->next)->next;
+		Node *new_prev = current_node->next;
+		(current_node->next)->next = current_node;
+		current_node->next = prev_node;
+		prev_node = new_prev;
+		// current_node = ((next_node != NULL) ? next_node : current_node );
+		current_node = next_node;
+	} 
+}
 
 int main(){
 	vector<int> v = {1,2,3,4,5,6,7,8,9,10};
@@ -182,5 +197,18 @@ int main(){
 
 	printLinkedList(head);
 
+	reverseLinkedList(head);
+
 
 }
+
+
+/*
+
+
+	0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6
+
+
+*/
+
+
