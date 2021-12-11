@@ -3,128 +3,132 @@ using namespace std;
 
 struct Node{
 	int data;
-	Node *next;
+	Node *left;
+	Node *right;
+	Node(int data){ 
+		this->data = data;
+		left = NULL;
+		right = NULL;
+	}
 };
 
-vector<int> v;
- 
-void prepend(Node **head,int new_data){
-	Node *new_node = (Node*) malloc(sizeof(Node));
-	new_node->data = new_data;
-	new_node->next = (*head);
-	(*head) = new_node; 
-}
-void append(Node **head,int new_data){
-	Node *new_node = (Node*) malloc(sizeof(Node));
-	Node *last_element = *head;
-	
-	new_node->data = new_data;
-	new_node->next = NULL;
-
-	if(*head == NULL){
-		*head = new_node;
-		return;
-	}
-	while(last_element->next != NULL){
-		last_element = last_element->next;
-	}
-	last_element->next = new_node;  
-	return;
-}
-bool search(Node *node,int info){
-	while(node != NULL){
-		if(node->data == info){
-			return true;
+void in_order_traversal(Node *root){
+	stack<Node *> s;
+	Node *current_node = root;
+	while(current_node != NULL || s.empty() == false){
+		while(current_node != NULL){
+			s.push(current_node);
+			current_node = current_node->left;
 		}
-		node = node->next;
-	}
-	return false;
-}
-void printTheLinkedList(Node *node){
-	while(node != NULL){
-		cout << " " << node->data;
-		v.push_back(node->data);
-		node = node->next;
+		current_node = s.top();
+		s.pop();
+		cout << " " << current_node->data;
+		current_node = current_node->right; 
 	}
 }
-void reverse(){ 
-	int left = 0;
-	int right = v.size() - 1;
-	while(left < right){
-		int temp = v[left];
-		v[left] = v[right];
-		v[right] = temp;
-		left++;
-		right--;
-	}
-	for(int i=0;i<=(v.size() - 1);i++){
-		cout << " " << v[i];
-	}
-}
-void sortIt(){
-	for(int i=0;i<=(v.size() - 1);i++){
-		int largest = i;
-		for(int j=i+1;j<=(v.size() - 1);j++){
-			if(v[j] > v[largest]){
-				largest = j;
+
+void BFS(Node *root){
+	queue<Node *> q;
+	if(root == NULL){
+		return;
+	} 
+	q.push(root);
+	vector<vector<int>> nums;
+	while(!q.empty()){
+		int size = q.size();
+		vector<int> num;
+		for(int i=0;i<size;i++){
+			Node *current_node = q.front();
+			q.pop();
+			num.push_back(current_node->data);
+			if(current_node->left != NULL){
+				q.push(current_node->left);
+			}
+			if(current_node->right != NULL){
+				q.push(current_node->right);
 			}
 		}
-		if(largest != i){
-			int temp = v[largest];
-			v[largest] = v[i];
-			v[i] = temp;
+		nums.push_back(num);
+	}
+	for(int i=0;i<nums.size();i++){
+		vector<int> v = nums[i]; 
+		for(int j=0;j<v.size();j++){
+			cout  << " " << nums[i][j];
+		}
+		cout << endl;
+	}
+}
+
+void DFS(Node *root){
+	if(root == NULL){
+		return ;
+	}
+	DFS(root->left);
+	cout << " " << root->data;
+	DFS(root->right);
+}
+
+void insert(Node *node,int data){
+	Node *new_node = new Node(data);
+	queue<Node *> q;
+	if(node == NULL){
+		return ;
+	}
+	q.push(node);
+	bool inserted = false;
+	while(!q.empty()){
+		int size = q.size();
+		for(int i=0;i<size;i++){
+			Node *current_node = q.front();
+			q.pop();
+			if(current_node->left != NULL){
+				q.push(current_node->left);
+			}
+			else{
+				if(inserted == false){
+					current_node->left = new_node;
+					inserted = true;
+				}
+			}
+			if(current_node->right != NULL){
+				q.push(current_node->right);
+			}
+			else{
+				if(inserted == false){
+					current_node->right = new_node;
+					inserted = true;
+				}
+			}
 		}
 	}
-	for(int i=0;i<=(v.size() - 1);i++){
-		cout << " " << v[i];
-	}
 }
+
 
 int main(){
-	Node *head = NULL;
-	append(&head,2);
-	append(&head,5);
-	append(&head,4);
-	append(&head,3);
-	append(&head,7);
-	append(&head,6);
-	append(&head,10);
-	append(&head,9);
-	append(&head,8);
-	prepend(&head,1);
-	
-	cout << endl ;
-	printTheLinkedList(head);
-	cout << endl ;
+	Node *root  = new Node(1);
+	root->left = new Node(2);
+	root->left->left = new Node(4);
+	root->left->left->left = new Node(8);
+	root->left->left->right = new Node(9);
+	root->left->right = new Node(5);
+	root->left->right->left = new Node(10);
+	root->left->right->right = new Node(11);
+	root->right = new Node(3);
+	root->right->left = new Node(6);
+	root->right->left->left = new Node(12);
+	root->right->left->right = new Node(13);
+	root->right->right = new Node(7);
+	root->right->right->right = new Node(15);
 
-	bool searching = search(head,10);
-	if(searching == 1){
-		cout << endl << " TRUE" << endl;
-	}
-	else{
-		cout << endl << " FALSE" << endl;
-	}
+	cout << endl << " Non_recursive INORDER_TRAVERSAL : " << endl <<endl;
+	in_order_traversal(root);
+	cout << endl << endl << endl << " BFS (Breadth First Search) : " << endl <<endl;
+	BFS(root);
+	cout << endl <<  endl << endl << " DFS (Depth First Search) : " << endl <<endl;
+	DFS(root);
+	cout << endl << endl << endl;
+	insert(root,14);
+	cout << endl << endl << endl << " After Insertion : " << endl <<endl;
+	BFS(root);
 
-	cout << endl;
-	reverse();
-	cout << endl;
-
-
-	cout << endl;
-	sortIt();
-	cout << endl;
 }
-
-
-/*
-
-
-	pointer soters the [address] of another variable
-
-
-	int var = 10;
-	int *addr_var = &var;
-	int *address = &adr_var;
-	int **address = &address
-
-*/
