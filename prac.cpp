@@ -149,8 +149,6 @@ void printLinkedList(Node *node){
 	cout << endl;
 }
 
-// NULL -> 0 -> 1 -> 2 -> 3
-
 void reverseLinkedList(Node **head){
 	Node *prev = NULL;
 	Node *current_node = *head;	
@@ -162,6 +160,42 @@ void reverseLinkedList(Node **head){
 	}
 	(*head) = prev;
 }
+
+struct Node_2{
+	int data;
+	Node_2 *left;
+	Node_2 *right;
+	Node_2(int data){
+		this->data = data;
+		left = NULL;
+		right = NULL;
+	}
+};
+
+void inOrderTraversal(Node_2 *root){
+	if(root == NULL){
+		return;
+	}
+	inOrderTraversal(root->left);
+	cout << " " << root->data;
+	inOrderTraversal(root->right);
+}
+
+void in_order_traversal(Node_2 *root){
+	stack<Node_2 *> s;
+	Node_2 *current_node = root;
+	while(current_node != NULL || s.empty() == false){
+		while(current_node != NULL){
+			s.push(current_node);
+			current_node = current_node->left;
+		}
+		current_node = s.top();
+		s.pop();
+		cout << " " << current_node->data;
+		current_node = current_node->right;
+	}
+}
+
 
 int main(){
 	vector<int> v = {1,2,3,4,5,6,7,8,9,10};
@@ -196,15 +230,15 @@ int main(){
 	printLinkedList(head);
 
 
+
+
+	Node_2 *root  = new Node_2(1);
+	root->left = new Node_2(2);
+	root->right = new Node_2(3);
+
+	cout << endl;
+
+	in_order_traversal(root);
+	
+	cout << endl;
 }
-
-
-/*
-
-
-	0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6
-
-
-*/
-
-
