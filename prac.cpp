@@ -219,6 +219,25 @@ void BFS(Node_2 *root){
 }
 
 
+void DFS(Node_2 *root){
+	if(root == NULL){
+		return ;
+	}
+	DFS(root->left);
+	cout << " " << root->data;
+	DFS(root->right);
+}
+
+void invert_bineary_tree(Node_2 *root){
+	if(root == NULL){
+		return ;
+	}
+	Node_2 *temp = root->left;
+	root->left = root->right;
+	root->right = temp;
+	invert_bineary_tree(root->left);
+	invert_bineary_tree(root->right);
+}
 
 int main(){
 	vector<int> v = {1,2,3,4,5,6,7,8,9,10};
@@ -257,12 +276,20 @@ int main(){
 
 	Node_2 *root  = new Node_2(1);
 	root->left = new Node_2(2);
+	root->left->left = new Node_2(4);
+	root->left->right = new Node_2(5);
 	root->right = new Node_2(3);
 
-	cout << endl;
+	cout << endl << "In order :"  << endl;
 
 	in_order_traversal(root);
 	BFS(root);
+	cout << endl;
+	DFS(root);
+	cout << endl << endl;
 	
+	invert_bineary_tree(root);
+	inOrderTraversal(root);
+
 	cout << endl;
 }
