@@ -196,6 +196,29 @@ void in_order_traversal(Node_2 *root){
 	}
 }
 
+void BFS(Node_2 *root){
+		queue<Node_2 *> q;
+		int counter = 1;
+		q.push(root);
+		while(!q.empty()){
+			int n = q.size();
+			for(int i=0;i<n;i++){
+				Node_2 *current_node = q.front();
+				q.pop();
+				if(current_node->left != NULL){
+					q.push(current_node->left);
+					counter ++;
+				}
+				if(current_node->right != NULL){
+					q.push(current_node->right);
+					counter ++;
+				}
+			}
+		}
+		cout << endl << endl << " " << counter << endl;
+}
+
+
 
 int main(){
 	vector<int> v = {1,2,3,4,5,6,7,8,9,10};
@@ -239,6 +262,7 @@ int main(){
 	cout << endl;
 
 	in_order_traversal(root);
+	BFS(root);
 	
 	cout << endl;
 }
