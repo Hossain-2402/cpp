@@ -218,7 +218,6 @@ void BFS(Node_2 *root){
 		cout << endl << endl << " " << counter << endl;
 }
 
-
 void DFS(Node_2 *root){
 	if(root == NULL){
 		return ;
