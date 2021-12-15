@@ -93,12 +93,12 @@ class Stack{
 			arr[++top] = a;
 		}
 		int pop(){
-			if(top<0) return (MAX + 1);
+			if(top<0) return INT_MAX;
 			int a = arr[top--];
 			return a;
 		}
 		int peek(){
-			if(top<0) return (MAX + 1);
+			if(top<0) return INT_MAX;
 			int a = arr[top];
 			return a;
 		}
@@ -217,6 +217,17 @@ void BFS(Node_2 *root){
 		}
 		cout << endl << endl << " " << counter << endl;
 }
+																																	/*
+
+		     					    1 
+		     				   /        \
+		     				 2            3
+		     			   /  \         /   \
+		     			  4                  5
+						/  \        		/ \
+					   6 					   7   
+																																	*/
+
 
 void DFS(Node_2 *root){
 	if(root == NULL){
@@ -276,8 +287,10 @@ int main(){
 	Node_2 *root  = new Node_2(1);
 	root->left = new Node_2(2);
 	root->left->left = new Node_2(4);
-	root->left->right = new Node_2(5);
+	root->left->left->left = new Node_2(6);
 	root->right = new Node_2(3);
+	root->right->right = new Node_2(5);
+	root->right->right->right = new Node_2(7);
 
 	cout << endl << "In order :"  << endl;
 
@@ -291,4 +304,6 @@ int main(){
 	inOrderTraversal(root);
 
 	cout << endl;
+
 }
+
