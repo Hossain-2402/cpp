@@ -249,6 +249,49 @@ void invert_bineary_tree(Node_2 *root){
 	invert_bineary_tree(root->right);
 }
 
+
+int pertition(vector<int> v,int left,int right){
+	int pivot = v[right];
+	int pivot_index = right;
+	while(left < right){
+		int left_element = v[left];
+		int right_element = v[right-1];
+		if((left_element > pivot) &&  (right_element < pivot)){
+			int temp = left_element;
+			left_element = right_element;
+			right_element = temp;
+			left ++;
+			right --;
+			continue;
+		}
+		if((left_element < pivot) &&  (right_element < pivot)) {
+			left ++;
+			continue;
+		}
+		if((left_element > pivot) &&  (right_element > pivot)) {
+			right --;
+			continue;
+		}	
+	}
+	int temp = v[right+1];
+	v[right+1] = v[pivot_index];
+	v[pivot_index] = temp;
+	return (right + 1); 
+}
+
+void quickSort(vector<int> v,int left,int right){
+	if(left < right){
+		int p = pertition(v,left,right);
+
+		quickSort(v,left,p-1);
+		quickSort(v,p+1,right);
+	}
+	for(int i=0;i<right;i++){
+		cout << " " << v[i];
+	}
+}
+
+
 int main(){
 	vector<int> v = {1,2,3,4,5,6,7,8,9,10};
 
@@ -302,6 +345,12 @@ int main(){
 	
 	invert_bineary_tree(root);
 	inOrderTraversal(root);
+
+
+	cout << endl;
+
+	int len = numbers.size();
+	quickSort(numbers,0,len);
 
 	cout << endl;
 
