@@ -196,15 +196,19 @@ void in_order_traversal(Node_2 *root){
 	}
 }
 
+
 void BFS(Node_2 *root){
 		queue<Node_2 *> q;
 		int counter = 1;
 		q.push(root);
+		vector<vector<int>> height;
 		while(!q.empty()){
 			int n = q.size();
+			vector<int> width;
 			for(int i=0;i<n;i++){
 				Node_2 *current_node = q.front();
 				q.pop();
+				width.push_back(current_node->data);
 				if(current_node->left != NULL){
 					q.push(current_node->left);
 					counter ++;
@@ -214,20 +218,19 @@ void BFS(Node_2 *root){
 					counter ++;
 				}
 			}
+			height.push_back(width);
 		}
-		cout << endl << endl << " " << counter << endl;
+
+
+		for(int i=0;i<height.size();i++){
+			vector<int> temp = height[i];
+			for(int j=0;j<temp.size();j++){
+				cout << " " << temp[j];
+			}
+			cout << endl;
+		}
+
 }
-																																	/*
-
-		     					    1 
-		     				   /        \
-		     				 2            3
-		     			   /  \         /   \
-		     			  4                  5
-						/  \        		/ \
-					   6 					   7   
-																																	*/
-
 
 void DFS(Node_2 *root){
 	if(root == NULL){
@@ -250,44 +253,48 @@ void invert_bineary_tree(Node_2 *root){
 }
 
 
-int pertition(vector<int> v,int left,int right){
+int pertition(int v[],int left,int right){
 	int pivot = v[right];
-	int pivot_index = right;
-	while(left < right){
-		int left_element = v[left];
-		int right_element = v[right-1];
-		if((left_element > pivot) &&  (right_element < pivot)){
-			int temp = left_element;
-			left_element = right_element;
-			right_element = temp;
-			left ++;
-			right --;
-			continue;
-		}
-		if((left_element < pivot) &&  (right_element < pivot)) {
-			left ++;
-			continue;
-		}
-		if((left_element > pivot) &&  (right_element > pivot)) {
-			right --;
-			continue;
-		}	
-	}
-	int temp = v[right+1];
-	v[right+1] = v[pivot_index];
-	v[pivot_index] = temp;
-	return (right + 1); 
+	int i = left - 1;
+	for(int j=left;j<right;j++){
+		if(v[j] > pivot) continue;
+		i ++;
+		int temp = v[i];
+		v[i] = v[j];
+		v[j] = temp;
+	} 
+	int temp = v[i+1];
+	v[i+1] = v[right];
+	v[right] = temp;
+
+	return (i+1);
 }
 
-void quickSort(vector<int> v,int left,int right){
+void quickSort(int v[],int left,int right){
 	if(left < right){
 		int p = pertition(v,left,right);
 
 		quickSort(v,left,p-1);
 		quickSort(v,p+1,right);
 	}
-	for(int i=0;i<right;i++){
-		cout << " " << v[i];
+}
+
+void insert_node_to_BST(Node_2 *root,int new_data){
+	if(root->data > new_data){
+		if(root->left == NULL){
+			Node_2 *new_node = new Node_2(new_data);
+			root->left = new_node;
+			return ;
+		}
+		insert_node_to_BST(root->left,new_data);
+	}
+	if(root->data < new_data){
+		if(root->right == NULL){
+			Node_2 *new_node = new Node_2(new_data);
+			root->right = new_node;
+			return ;
+		}
+		insert_node_to_BST(root->right,new_data);
 	}
 }
 
@@ -327,30 +334,46 @@ int main(){
 
 
 
-	Node_2 *root  = new Node_2(1);
-	root->left = new Node_2(2);
-	root->left->left = new Node_2(4);
-	root->left->left->left = new Node_2(6);
-	root->right = new Node_2(3);
-	root->right->right = new Node_2(5);
-	root->right->right->right = new Node_2(7);
+	// Node_2 *root  = new Node_2(1);
+	// root->left = new Node_2(2);
+	// root->left->left = new Node_2(4);
+	// root->left->left->left = new Node_2(6);
+	// root->right = new Node_2(3);
+	// root->right->right = new Node_2(5);
+	// root->right->right->right = new Node_2(7);
+
+	Node_2 *root = new Node_2(27);
+	root->left = new Node_2(14);
+	root->left->left = new Node_2(10);
+	root->left->right = new Node_2(19);
+	root->right = new Node_2(35);
+	root->right->left = new Node_2(31);
+	root->right->right = new Node_2(42);
+
+
 
 	cout << endl << "In order :"  << endl;
 
 	in_order_traversal(root);
+	cout << endl << endl;
 	BFS(root);
 	cout << endl;
 	DFS(root);
 	cout << endl << endl;
 	
-	invert_bineary_tree(root);
+	// invert_bineary_tree(root);
 	inOrderTraversal(root);
 
+	cout << endl << "The new tree : " << endl;
 
+	cout << endl << endl;
+
+	BFS(root);
 	cout << endl;
 
-	int len = numbers.size();
-	quickSort(numbers,0,len);
+	insert_node_to_BST(root,13);
+
+	BFS(root);
 
 	cout << endl;
 

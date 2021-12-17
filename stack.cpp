@@ -25,7 +25,7 @@ void quickSort(int arr[], int left, int right)
 	if (left < right) 
 	{ 
 		int p = partition(arr, left, right); 
-
+ 
 		quickSort(arr, left, p - 1); 
 		quickSort(arr, p + 1, right); 
 	} 
@@ -41,11 +41,13 @@ void printArray(int arr[], int size)
 
 int main() 
 { 
-	int arr[] = {5,4,3,2,1}; 
-	int n = 5;
+	int arr[] = {10,7,8,9,1,5}; 
+	int n = 6;
 	quickSort(arr, 0, n - 1); 
 	cout << endl <<"Sorted array: "; 
 	printArray(arr, n); 
 	return 0; 
 } 
 
+// 1,7,8,9,10,5
+//  7 is the new pivot
