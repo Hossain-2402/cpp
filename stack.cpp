@@ -1,53 +1,52 @@
-#include <bits/stdc++.h> 
-using namespace std; 
+#include<bits\stdc++.h>
+using namespace std;
 
-int partition (int arr[], int left, int right) { 
-	int pivot = arr[right]; 
-	int i = (left - 1);
-	for (int j = left; j < right; j++) 
-	{ 
-		if (arr[j] < pivot) 
-		{ 
-			i++;
-			int temp = arr[i];
- 			arr[i] = arr[j];
- 			arr[j] = temp;
-		} 
-	} 
-	int temp = arr[i+1];
-	arr[i+1] = arr[right];
-	arr[right] = temp;
-	return (i + 1); 
-} 
+void find_matrix(vector<int> rowSums,vector<int> colSums){
+	int n = rowSums.size();
+	int col_index = 0;
+	vector<vector<int>> res(n,vector<int>(n));
+	for(int i=0;i<n;i++){
+		int row_index = 0;
+		for(int j=0;j<n;j++){
+			int row = rowSums[row_index];
+			int col = colSums[col_index];
+			int val = ((row < col) ? row : col);
 
-void quickSort(int arr[], int left, int right) 
-{ 
-	if (left < right) 
-	{ 
-		int p = partition(arr, left, right); 
- 
-		quickSort(arr, left, p - 1); 
-		quickSort(arr, p + 1, right); 
-	} 
-} 
+			res[i][j] = val;
 
-void printArray(int arr[], int size) 
-{ 
-	int i; 
-	for (i = 0; i < size; i++) 
-		cout << arr[i] << " "; 
-	cout << endl; 
-} 
+			int new_row_val = row-val;
+			int temp = new_row_val;
+			new_row_val = rowSums[row_index];
+			rowSums[row_index] = temp;
 
-int main() 
-{ 
-	int arr[] = {10,7,8,9,1,5}; 
-	int n = 6;
-	quickSort(arr, 0, n - 1); 
-	cout << endl <<"Sorted array: "; 
-	printArray(arr, n); 
-	return 0; 
-} 
+			int new_col_val = col-val;
+			temp = new_col_val;
+			new_col_val = colSums[col_index];
+			colSums[col_index] = temp;
 
-// 1,7,8,9,10,5
-//  7 is the new pivot
+			row_index ++;
+		}
+		col_index ++;
+	}
+
+	cout << endl;
+
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			cout << " " << res[i][j];
+		}
+		cout << endl;
+	}
+
+	cout << endl;
+}
+
+int main(){
+
+	vector<int> rowSums = {8,6,8};
+	vector<int> colSums = {5,7,10};
+
+	find_matrix(rowSums,colSums);
+
+
+}
