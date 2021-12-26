@@ -1,53 +1,68 @@
-#include <bits/stdc++.h> 
-using namespace std; 
+#include<bits\stdc++.h>
+using namespace std;
 
-int partition (int arr[], int left, int right) { 
-	int pivot = arr[right]; 
-	int i = (left - 1);
-	for (int j = left; j < right; j++) 
-	{ 
-		if (arr[j] < pivot) 
-		{ 
-			i++;
-			int temp = arr[i];
- 			arr[i] = arr[j];
- 			arr[j] = temp;
-		} 
-	} 
-	int temp = arr[i+1];
-	arr[i+1] = arr[right];
-	arr[right] = temp;
-	return (i + 1); 
+struct Node{
+	int data;
+	Node *left;
+	Node *right;
+	Node(int data){
+		this->data = data;
+		left = NULL;
+		right = NULL;
+	}
+};
+
+Node* createMaxHeap(Node *heap[],int heap_size){
+	Node *root = heap[1];
+	for(int i=1;i<heap_size;i++){
+		Node *current_node = heap[i];
+		current_node->left = heap[i*2];
+		current_node->right = heap[i*2+1];
+	}
+	return root;
 } 
 
-void quickSort(int arr[], int left, int right) 
-{ 
-	if (left < right) 
-	{ 
-		int p = partition(arr, left, right); 
- 
-		quickSort(arr, left, p - 1); 
-		quickSort(arr, p + 1, right); 
-	} 
-} 
+void BFS(Node *root){
+	queue<Node *> q;
+	q.push(root);
+	cout << endl;
+	while(!q.empty()){
+		int n = q.size();
+		for(int i=0;i<n;i++){
+			Node *current_node = q.front();
+			q.pop();
+			cout << " " << current_node->data;
+			if(current_node->left != NULL){
+				q.push(current_node->left);
+			}
+			if(current_node->right != NULL){
+				q.push(current_node->right);
+			}
+		}
+		cout << endl;
+	}
+}
 
-void printArray(int arr[], int size) 
-{ 
-	int i; 
-	for (i = 0; i < size; i++) 
-		cout << arr[i] << " "; 
-	cout << endl; 
-} 
 
-int main() 
-{ 
-	int arr[] = {10,7,8,9,1,5}; 
-	int n = 6;
-	quickSort(arr, 0, n - 1); 
-	cout << endl <<"Sorted array: "; 
-	printArray(arr, n); 
-	return 0; 
-} 
+int main(){
 
-// 1,7,8,9,10,5
-//  7 is the new pivot
+	int heap_size = 8;
+
+	Node *heap[heap_size];
+	heap[0] = NULL;
+	heap[1] = new Node(100);
+	heap[2] = new Node(40);
+	heap[3] = new Node(50);
+	heap[4] = new Node(10);
+	heap[5] = new Node(15);
+	heap[6] = new Node(30);
+	heap[7] = new Node(40);
+
+
+	Node *root = createMaxHeap(heap,heap_size);
+
+	BFS(root);
+
+}
+
+

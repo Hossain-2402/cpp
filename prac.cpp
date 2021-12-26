@@ -252,6 +252,25 @@ void invert_bineary_tree(Node_2 *root){
 	invert_bineary_tree(root->right);
 }
 
+void insert_node_to_BST(Node_2 *root,int new_data){
+	if(root->data > new_data){
+		if(root->left == NULL){
+			Node_2 *new_node = new Node_2(new_data);
+			root->left = new_node;
+			return ;
+		}
+		insert_node_to_BST(root->left,new_data);
+	}
+	if(root->data < new_data){
+		if(root->right == NULL){
+			Node_2 *new_node = new Node_2(new_data);
+			root->right = new_node;
+			return ;
+		}
+		insert_node_to_BST(root->right,new_data);
+	}
+}
+
 
 int pertition(int v[],int left,int right){
 	int pivot = v[right];
@@ -279,24 +298,6 @@ void quickSort(int v[],int left,int right){
 	}
 }
 
-void insert_node_to_BST(Node_2 *root,int new_data){
-	if(root->data > new_data){
-		if(root->left == NULL){
-			Node_2 *new_node = new Node_2(new_data);
-			root->left = new_node;
-			return ;
-		}
-		insert_node_to_BST(root->left,new_data);
-	}
-	if(root->data < new_data){
-		if(root->right == NULL){
-			Node_2 *new_node = new Node_2(new_data);
-			root->right = new_node;
-			return ;
-		}
-		insert_node_to_BST(root->right,new_data);
-	}
-}
 
 
 int main(){
