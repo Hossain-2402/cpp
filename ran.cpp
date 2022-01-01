@@ -10,7 +10,6 @@ const string nl = "\n";
 int main(){
 
 	vi ans = {1,2,3,4,6};
-	int i = 0;
 
 	cout << nl;
 	FOR(i,sz(ans)) cout << " " << ans[i] ;
