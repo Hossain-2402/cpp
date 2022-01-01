@@ -31,7 +31,7 @@ void BFS(Node *root){
 		for(int i=0;i<n;i++){
 			Node *current_node = q.front();
 			q.pop();
-			cout << " " << current_node->data;
+			cout << "\t" << current_node->data;
 			if(current_node->left != NULL){
 				q.push(current_node->left);
 			}
@@ -57,7 +57,6 @@ int main(){
 	heap[5] = new Node(15);
 	heap[6] = new Node(30);
 	heap[7] = new Node(40);
-
 
 	Node *root = createMaxHeap(heap,heap_size);
 
