@@ -5,6 +5,7 @@ using namespace std;
 const string nl = "\n";
 
 
+
 struct Node{
 	int data;
 	Node *left;
@@ -22,11 +23,11 @@ void max_heap(Node *heap[],int heap_size,int index){
 	int right_node = index * 2 + 1;
 	int largest;
 
-	if(left_node < heap_size && heap[left_node] > heap[index]) largest = left_node;
+	if(left_node <= heap_size && heap[left_node] > heap[index]) largest = left_node;
 
 	else largest = index; 
 
-	if(right_node < heap_size && heap[right_node] > heap[largest]) largest = right_node;
+	if(right_node <= heap_size && heap[right_node] > heap[largest]) largest = right_node;
 
 	if(largest == index) return;
 
@@ -60,7 +61,3 @@ int main(){
 
 }
 
-
-        // 20
-        // 40      50
-        // 10      15      30      40
