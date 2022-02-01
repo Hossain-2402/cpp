@@ -298,6 +298,21 @@ void quickSort(int v[],int left,int right){
 	}
 }
 
+Node* makeTree(vector<int> nodes){
+	vector<Node*> elements;
+	elements.push_back(NULL);
+	for(int i=1;i<nodes.size();i++){
+		if(nodes[i] == 0) elements.push_back(NULL);
+		else elements.push_back(new Node(nodes[i]));
+	}
+	for(int i=1;i<elements.size();i++){
+		if(i*2 < nodes.size()) elements[i]->left = elements[i*2];
+
+		if(i*2+1 < nodes.size())elements[i]->right = elements[i*2+1];
+	}
+	return elements[1];
+}
+
 
 
 int main(){

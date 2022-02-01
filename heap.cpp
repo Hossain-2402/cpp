@@ -1,65 +1,63 @@
 #include<bits\stdc++.h>
 using namespace std;
 
+#define FOR(n) for(int i=1;i<n;i++)
 const string nl = "\n";
 
 
-bool solve(vector<vector<int>> v){
 
-	int H = v.size();
-	int W = v[0].size();
-
-	int left = 0;
-	int top = 0;
-	int right = W-1;
-	int bottom = H-1;
-
-	map<int,bool> visited;
-
-	for(int i=0;i<H;i++){
-		for(int j=0;j<W;j++){
-			int element = v[i][j];
-			visited[element] = false;
-		}
+struct Node{
+	int data;
+	Node *left;
+	Node *right;
+	Node(int data){
+		this->data = data;
+		left = NULL;
+		right = NULL;
 	}
+};
 
-	while(left <= right && top <= bottom){
-		for(int i=left;i<W;i++){
-			if(!visited[v[top][i]]) cout << " " << v[top][i]; visited[v[top][i]] = true; continue;
-			break;
-		}
-		top ++;
 
-		for(int i=top;i<H;i++){
-			if(!visited[v[i][right]]) cout << " " << v[i][right]; visited[v[i][right]] = true; continue;
-			break;
-		}
-		right --;
+void max_heap(Node *heap[],int heap_size,int index){
+	int left_node = index * 2;
+	int right_node = index * 2 + 1;
+	int largest;
 
-		for(int i=right;i>=left;i--){
-			if(!visited[v[bottom][i]]) cout << " " << v[bottom][i]; visited[v[bottom][i]] = true; continue;
-			break;
-		}
-		bottom --;
+	if(left_node <= heap_size && heap[left_node] > heap[index]) largest = left_node;
 
-		for(int i=bottom;i>=top;i--){
-			if(!visited[v[i][left]]) cout << " " << v[i][left]; visited[v[i][left]] = true; continue;
-			break;	
-		}
-		left ++;
-	}
+	else largest = index; 
 
+	if(right_node <= heap_size && heap[right_node] > heap[largest]) largest = right_node;
+
+	if(largest == index) return;
+
+	Node *temp = heap[largest];
+	heap[largest] = heap[index];
+	heap[index] = temp;
+
+	max_heap(heap,heap_size,largest);
 }
 
 int main(){
 
-		vector<vector<int>> v = {
-			{1,2,3},
-			{4,5,6},
-			{7,8,9}
-		};
 
-		solve(v);
+	int heap_size = 8;
+
+	Node *heap[heap_size];
+	heap[0] = NULL;
+	heap[1] = new Node(20);
+	heap[2] = new Node(40);
+	heap[3] = new Node(50);
+	heap[4] = new Node(10);
+	heap[5] = new Node(15);
+	heap[6] = new Node(30);
+	heap[7] = new Node(40);
+
+	max_heap(heap,heap_size,1);
+
+	cout << nl;
+	FOR(heap_size) cout << " " << heap[i]->data;
+	cout << nl;
 
 }
 
